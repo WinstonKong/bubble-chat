@@ -7,6 +7,26 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { Logger } from './utils';
 
+export async function authenticateGuest() {
+  try {
+    await signIn('credentials', {
+      redirectTo: '/bubble/chats',
+      username: process.env.GUEST_NAME,
+      password: process.env.GUEST_PASSWORD,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Invalid credentials.';
+      }
+    }
+    throw error;
+  }
+}
+
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -59,11 +79,11 @@ export async function signup(
 }
 
 export async function revalidateRoute(path: string) {
-  revalidatePath(path)
+  revalidatePath(path);
 }
 
-export async function redirectTo(url:string) {
-  redirect(url)
+export async function redirectTo(url: string) {
+  redirect(url);
 }
 
 export async function logOut() {

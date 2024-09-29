@@ -18,6 +18,12 @@ export default function LoginPage() {
             Create one
           </Link>
         </div>
+        <div className={`${lusitana.className} pl-4 text-sm`}>
+          <span>{`Or, `}</span>
+          <Link href={'/login-guest'} className="text text-blue-400">
+            Browse as Guest
+          </Link>
+        </div>
       </div>
     </main>
   );
